@@ -1,6 +1,6 @@
 # Still
 
-Eine schlichte Meditationsuhr fürs iPhone. SwiftUI, iOS 17 oder neuer, vollständig offline. Keine Werbung, kein Konto, kein Abo.
+Eine schlichte Meditationsuhr fürs iPhone mit vollständig chinesischer Oberfläche (简体中文), auf dem Home-Bildschirm als **静坐**. SwiftUI, iOS 17 oder neuer, vollständig offline. Keine Werbung, kein Konto, kein Abo.
 
 [Helle Ansicht](docs/Vorschau/Hell.png) · [Dunkle Ansicht](docs/Vorschau/Dunkel.png) — echte Screenshots aus dem iPhone-Simulator.
 
@@ -22,7 +22,7 @@ Ein GitHub-Repository ist kein App-Store-Download. Für diese persönliche App i
 4. Links das blaue Projekt **Still** wählen, dann unter **TARGETS → Still → Signing & Capabilities** dein **Personal Team** wählen. **Automatically manage signing** eingeschaltet lassen. Bei Konflikten den Bundle Identifier `de.daniel4828.still` auf einen eindeutigen Wert ändern.
 5. iPhone per Kabel anschließen, entsperren und der Verbindung vertrauen. Auf dem iPhone gegebenenfalls unter **设置 → 隐私与安全性 → 开发者模式** den Entwicklermodus aktivieren; bei deutscher iPhone-Sprache: **Einstellungen → Datenschutz & Sicherheit → Entwicklermodus**. Der Schalter erscheint unter Umständen erst nach der ersten Verbindung mit Xcode. Das iPhone startet dabei neu.
 6. Oben in Xcode dein iPhone als Ziel wählen und die Wiedergabe-Taste **▶** drücken. Bei einem Hinweis zur Entwickleridentität auf dem iPhone unter **设置 → 通用 → VPN与设备管理** bzw. **Einstellungen → Allgemein → VPN und Geräteverwaltung** dem eigenen Entwicklerprofil vertrauen.
-7. Die App **Still** ist jetzt auf dem Home-Bildschirm. Du kannst das Kabel entfernen.
+7. Die App **静坐** ist jetzt auf dem Home-Bildschirm. Du kannst das Kabel entfernen.
 
 **Kostenloses Apple-Konto:** Die Signatur gilt nur sieben Tage. Danach auf demselben iPhone aus Xcode erneut starten. Die App nicht vorher löschen, damit ihre Einstellungen erhalten bleiben. Für längere Signaturen oder TestFlight ist eine kostenpflichtige Apple-Developer-Mitgliedschaft erforderlich; ein öffentliches GitHub-Repository ersetzt sie nicht.
 

@@ -22,7 +22,7 @@ final class AudioController {
                   type == AVAudioSession.InterruptionType.began.rawValue else { return }
             Task { @MainActor in
                 self?.pause()
-                self?.onEvent?(.interrupted("Die Audiowiedergabe wurde unterbrochen. Setze die Sitzung fort, wenn du bereit bist."))
+                self?.onEvent?(.interrupted("声音播放已中断。准备好后，请继续冥想。"))
             }
         })
         notifications.append(center.addObserver(forName: AVAudioSession.routeChangeNotification, object: nil, queue: .main) { [weak self] note in
@@ -30,20 +30,20 @@ final class AudioController {
                   reason == AVAudioSession.RouteChangeReason.oldDeviceUnavailable.rawValue else { return }
             Task { @MainActor in
                 self?.pause()
-                self?.onEvent?(.interrupted("Die Audioverbindung wurde getrennt. Prüfe den Lautsprecher, bevor du fortsetzt."))
+                self?.onEvent?(.interrupted("音频连接已断开。继续前，请先检查声音会从哪里播放。"))
             }
         })
         notifications.append(center.addObserver(forName: AVAudioSession.mediaServicesWereResetNotification, object: nil, queue: .main) { [weak self] _ in
             Task { @MainActor in
                 self?.stop()
-                self?.onEvent?(.failed("iOS hat die Audiowiedergabe zurückgesetzt. Bitte beende die Sitzung und starte neu."))
+                self?.onEvent?(.failed("iOS 已重置声音播放。请结束本次冥想，然后重新开始。"))
             }
         })
         notifications.append(center.addObserver(forName: .AVPlayerItemFailedToPlayToEndTime, object: nil, queue: .main) { [weak self] _ in
             Task { @MainActor in
                 guard self?.wantsPlayback == true else { return }
                 self?.pause()
-                self?.onEvent?(.failed("Die Audiospur konnte nicht weitergespielt werden. Bitte starte die Sitzung neu."))
+                self?.onEvent?(.failed("声音无法继续播放。请重新开始冥想。"))
             }
         })
     }
@@ -82,7 +82,7 @@ final class AudioController {
                 case .waitingToPlayAtSpecifiedRate: self.onEvent?(.waiting)
                 case .paused:
                     self.pause()
-                    self.onEvent?(.interrupted("Die Wiedergabe wurde angehalten. Du kannst die Sitzung fortsetzen."))
+                    self.onEvent?(.interrupted("声音播放已暂停。你可以继续冥想。"))
                 @unknown default: break
                 }
             }
@@ -91,14 +91,14 @@ final class AudioController {
             guard player.status == .failed else { return }
             Task { @MainActor in
                 self?.pause()
-                self?.onEvent?(.failed("Audio konnte nicht gestartet werden. Bitte beende die Sitzung und versuche es erneut."))
+                self?.onEvent?(.failed("无法开始播放声音。请结束本次冥想，然后重试。"))
             }
         }
         loopObservation = looper?.observe(\.status, options: [.new]) { [weak self] looper, _ in
             guard looper.status == .failed else { return }
             Task { @MainActor in
                 self?.pause()
-                self?.onEvent?(.failed("Die Gong-Wiederholung ist fehlgeschlagen. Bitte starte die Sitzung neu."))
+                self?.onEvent?(.failed("钟声无法循环播放。请重新开始冥想。"))
             }
         }
         wantsPlayback = true
@@ -114,7 +114,7 @@ final class AudioController {
     func resume() throws {
         guard let player, player.status != .failed, player.currentItem != nil,
               looper?.status != .failed else {
-            throw NSError(domain: "Still", code: 1, userInfo: [NSLocalizedDescriptionKey: "Bitte beende die Sitzung und starte sie neu."])
+            throw NSError(domain: "Still", code: 1, userInfo: [NSLocalizedDescriptionKey: "请结束本次冥想，然后重新开始。"])
         }
         try activate()
         wantsPlayback = true
@@ -141,7 +141,7 @@ final class AudioController {
         preview = try AVAudioPlayer(contentsOf: url)
         preview?.volume = Float(volume)
         guard preview?.play() == true else {
-            throw NSError(domain: "Still", code: 2, userInfo: [NSLocalizedDescriptionKey: "Die Gong-Vorschau konnte nicht abgespielt werden."])
+            throw NSError(domain: "Still", code: 2, userInfo: [NSLocalizedDescriptionKey: "无法试听钟声。请检查媒体音量和音频连接后重试。"])
         }
     }
 }

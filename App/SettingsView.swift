@@ -27,22 +27,22 @@ struct SettingsView: View {
             Form {
                 Section {
                     NavigationLink {
-                        DurationEditor(title: "Vorbereitung", seconds: preparation, minimum: 0, maximum: 300)
-                    } label: { LabeledContent("Vorbereitung", value: SessionModel.time(Double(model.settings.preparation))) }
+                        DurationEditor(title: "准备时间", seconds: preparation, minimum: 0, maximum: 300)
+                    } label: { LabeledContent("准备时间", value: SessionModel.time(Double(model.settings.preparation))) }
                     NavigationLink {
-                        DurationEditor(title: "Gong-Intervall", seconds: interval, minimum: 15, maximum: 7200)
-                    } label: { LabeledContent("Gong-Intervall", value: SessionModel.time(Double(model.settings.interval))) }
-                } header: { Text("Zeit") } footer: {
-                    Text("Nach der Vorbereitung erklingt der Startgong. Danach wiederholt sich der Gong ohne Zeitlimit.")
+                        DurationEditor(title: "钟声间隔", seconds: interval, minimum: 15, maximum: 7200)
+                    } label: { LabeledContent("钟声间隔", value: SessionModel.time(Double(model.settings.interval))) }
+                } header: { Text("时间") } footer: {
+                    Text("准备时间结束后，钟声响起，冥想开始。之后按设定的间隔持续响铃，直到你结束冥想。")
                 }
                 Section {
-                    Slider(value: volume, in: 0.05...1) { Text("Gong-Lautstärke") }
-                    Button("Gong anhören", systemImage: "speaker.wave.2", action: model.preview)
-                    SystemVolumeSlider().frame(height: 36).accessibilityLabel("iPhone-Medienlautstärke")
-                } header: { Text("Klang") } footer: {
-                    Text("Oben: Lautstärke des Gongs. Unten: iPhone-Medienlautstärke. Bei Medienlautstärke null bleibt der Gong stumm. Prüfe den Klang vor der Meditation.")
+                    Slider(value: volume, in: 0.05...1) { Text("钟声音量") }
+                    Button("试听钟声", systemImage: "speaker.wave.2", action: model.preview)
+                    SystemVolumeSlider().frame(height: 36).accessibilityLabel("iPhone 媒体音量")
+                } header: { Text("声音") } footer: {
+                    Text("上方调整钟声音量，下方调整 iPhone 媒体音量。如果媒体音量为零，就听不到钟声。冥想前请先试听。")
                 }
-                Section("Presets") {
+                Section("预设") {
                     ForEach(model.presets) { preset in
                         Button {
                             model.settings = preset.settings
@@ -50,27 +50,27 @@ struct SettingsView: View {
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(preset.name).foregroundStyle(.primary)
-                                    Text("\(preset.settings.preparation) Sek. Vorbereitung · \(SessionModel.time(Double(preset.settings.interval))) Intervall")
+                                    Text("准备 \(preset.settings.preparation) 秒 · 间隔 \(SessionModel.time(Double(preset.settings.interval)))")
                                         .font(.caption).foregroundStyle(.secondary)
                                 }
                                 Spacer()
-                                if preset.settings == model.settings { Image(systemName: "checkmark").accessibilityLabel("Ausgewählt") }
+                                if preset.settings == model.settings { Image(systemName: "checkmark").accessibilityLabel("已选择") }
                             }
                         }
                     }.onDelete(perform: model.deletePresets)
-                    TextField("Name, z. B. Abendruhe", text: $presetName).onChange(of: presetName) { _, value in
+                    TextField("名称，例如：晚间静坐", text: $presetName).onChange(of: presetName) { _, value in
                         presetName = String(value.prefix(60))
                     }
-                    Button("Aktuelle Einstellung speichern") { model.savePreset(name: presetName); presetName = "" }
+                    Button("保存当前设置") { model.savePreset(name: presetName); presetName = "" }
                         .disabled(presetName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
                 }
                 Section {
-                    Text("Du kannst den Bildschirm sperren und „Nicht stören“ aktivieren. Die Sitzung spielt eine Audiospur mit stillen Pausen ab. Lass die App geöffnet oder im Hintergrund; vollständiges Beenden stoppt den Gong.")
-                    Text("Anrufe und getrennte Kopfhörer pausieren die Sitzung. Setze sie danach in der App fort.")
-                } header: { Text("Gut zu wissen") }.font(.footnote).foregroundStyle(.secondary)
+                    Text("冥想时可以锁屏并开启“勿扰模式”。应用会播放带有静音间隔的音轨。请让应用保持打开或在后台运行；从后台彻底关闭应用后，钟声也会停止。")
+                    Text("来电或耳机断开连接时，冥想会暂停。之后请回到应用中继续。")
+                } header: { Text("使用提示") }.font(.footnote).foregroundStyle(.secondary)
             }
-            .navigationTitle("Einstellungen").navigationBarTitleDisplayMode(.inline)
-            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Fertig") { dismiss() } } }
+            .navigationTitle("设置").navigationBarTitleDisplayMode(.inline)
+            .toolbar { ToolbarItem(placement: .confirmationAction) { Button("完成") { dismiss() } } }
         }
     }
 }
@@ -84,26 +84,26 @@ struct DurationEditor: View {
     var body: some View {
         Form {
             Section {
-                Stepper("Minuten: \(seconds / 60)", value: Binding(get: { seconds / 60 }, set: {
+                Stepper("分钟：\(seconds / 60)", value: Binding(get: { seconds / 60 }, set: {
                     seconds = min(maximum, max(minimum, $0 * 60 + seconds % 60))
                 }), in: 0...(maximum / 60))
-                Stepper("Sekunden: \(seconds % 60)", value: Binding(get: { seconds % 60 }, set: {
+                Stepper("秒：\(seconds % 60)", value: Binding(get: { seconds % 60 }, set: {
                     seconds = min(maximum, max(minimum, seconds / 60 * 60 + $0))
                 }), in: 0...59)
-                LabeledContent("Dauer", value: SessionModel.time(Double(seconds)))
+                LabeledContent("时长", value: SessionModel.time(Double(seconds)))
             }
             Section {
-                if minimum == 0 { Button("Ohne Vorbereitung") { seconds = 0 } }
+                if minimum == 0 { Button("跳过准备") { seconds = 0 } }
                 if maximum > 300 {
                     ForEach([15, 30, 60, 300, 600, 900, 1200, 1800, 3600], id: \.self) { value in
-                        Button(value < 60 ? "\(value) Sekunden" : "\(value / 60) Minuten") { seconds = value }
+                        Button(value < 60 ? "\(value) 秒" : "\(value / 60) 分钟") { seconds = value }
                     }
                 } else {
                     ForEach([15, 30, 60, 120, 300], id: \.self) { value in
-                        Button("\(value) Sekunden") { seconds = value }
+                        Button("\(value) 秒") { seconds = value }
                     }
                 }
-            } header: { Text("Schnellauswahl") }
+            } header: { Text("快速选择") }
         }.navigationTitle(title)
     }
 }

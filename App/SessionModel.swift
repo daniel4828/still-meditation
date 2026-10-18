@@ -57,7 +57,7 @@ final class SessionModel: ObservableObject {
             }
         } catch {
             audio.stop(); clock.reset(); elapsed = 0; state = .idle
-            message = error.localizedDescription
+            message = "无法播放声音。请检查媒体音量和音频连接后重试。"
         }
     }
 
@@ -74,7 +74,7 @@ final class SessionModel: ObservableObject {
 
     func preview() {
         do { try audio.previewGong(volume: settings.volume) }
-        catch { message = error.localizedDescription }
+        catch { message = "无法播放声音。请检查媒体音量和音频连接后重试。" }
     }
 
     func savePreset(name: String) {
