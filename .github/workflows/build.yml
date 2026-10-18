@@ -1,0 +1,15 @@
+name: App prüfen
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Swift-Kern testen
+        run: swift test
+      - name: iPhone-App ohne Signatur bauen
+        run: xcodebuild -project Still.xcodeproj -scheme Still -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO build
