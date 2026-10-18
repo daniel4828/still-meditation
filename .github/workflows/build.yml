@@ -13,3 +13,22 @@ jobs:
         run: swift test
       - name: iPhone-App ohne Signatur bauen
         run: xcodebuild -project Still.xcodeproj -scheme Still -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO build
+      - name: App im iPhone-Simulator öffnen
+        run: |
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import json,sys; d=json.load(sys.stdin); print(next(v["udid"] for group in d["devices"].values() for v in group if "iPhone" in v["name"]))')
+          xcrun simctl boot "$DEVICE_ID"
+          xcrun simctl bootstatus "$DEVICE_ID" -b
+          xcrun simctl status_bar "$DEVICE_ID" override --time '9:41' --batteryState charged --batteryLevel 100
+          xcrun simctl ui "$DEVICE_ID" appearance light
+          xcrun simctl install "$DEVICE_ID" DerivedData/Build/Products/Debug-iphonesimulator/Still.app
+          xcrun simctl launch "$DEVICE_ID" de.daniel4828.still
+          sleep 5
+          mkdir -p Preview
+          xcrun simctl io "$DEVICE_ID" screenshot Preview/Still-iPhone.png
+          xcrun simctl ui "$DEVICE_ID" appearance dark
+          sleep 2
+          xcrun simctl io "$DEVICE_ID" screenshot Preview/Still-iPhone-Dunkel.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Still-iPhone-Vorschau
+          path: Preview/

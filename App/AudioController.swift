@@ -76,7 +76,7 @@ final class AudioController {
         playbackObservation = queue.observe(\.timeControlStatus, options: [.new]) { [weak self] player, _ in
             let status = player.timeControlStatus
             Task { @MainActor in
-                guard let self, self.wantsPlayback else { return }
+                guard let self, self.wantsPlayback, self.player?.timeControlStatus == status else { return }
                 switch status {
                 case .playing: self.onEvent?(.playing)
                 case .waitingToPlayAtSpecifiedRate: self.onEvent?(.waiting)
