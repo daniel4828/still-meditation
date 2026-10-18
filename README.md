@@ -2,6 +2,8 @@
 
 Eine schlichte Meditationsuhr fürs iPhone. SwiftUI, iOS 17 oder neuer, vollständig offline. Keine Werbung, kein Konto, kein Abo.
 
+[Helle Ansicht](docs/Vorschau/Hell.png) · [Dunkle Ansicht](docs/Vorschau/Dunkel.png) — echte Screenshots aus dem iPhone-Simulator.
+
 - Vorbereitung: 0 bis 5 Minuten, Standard 1 Minute.
 - Kurzer, sanfter Startgong nach der Vorbereitung.
 - Endlose Gong-Intervalle: 15 Sekunden bis 2 Stunden, Standard 15 Minuten.
