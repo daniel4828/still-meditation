@@ -32,7 +32,7 @@ Still verwendet `AVAudioSession.Category.playback` und `UIBackgroundModes = audi
 
 Die Architektur ist für gesperrten Bildschirm und aktiven Fokus „Nicht stören“ vorgesehen. Eine Zusicherung für jedes Gerät/jede iOS-Version ist ohne realen Test nicht möglich. Medienlautstärke null, ein umgeleiteter Bluetooth-Ausgang, Telefonanrufe oder vollständiges Beenden der App können die hörbare Wiedergabe verhindern. Eine laufende Sitzung wird nicht nach einem Neustart oder Beenden wiederhergestellt.
 
-- Vorher **Gong anhören** testen und die iPhone-Medienlautstärke passend einstellen.
+- Vorher **试听钟声** testen und die iPhone-Medienlautstärke passend einstellen.
 - Einmal starten, danach Bildschirm sperren. Die App nicht im App-Umschalter wegwischen.
 - Entfernte Kopfhörer oder Anrufe pausieren die Sitzung; danach bewusst fortsetzen.
 - Eine aktive Audiositzung kann andere Medien unterbrechen und braucht mehr Akku als ein inaktiver Timer. Die Stille ist Teil der Meditations-Audiospur. App-Store-Freigabe ist weder beantragt noch zugesichert.

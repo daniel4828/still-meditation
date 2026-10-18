@@ -1,6 +1,6 @@
 # Prüfbericht – 18. Oktober 2026
 
-Geprüfter App-Quellcode: Commit `de07de0`. Nachfolgende Änderungen betreffen ausschließlich Anleitung, CI-Konfiguration und diese Vorschau-Dateien.
+Geprüfter App-Quellcode: Commit `de07de0`. Dieser ursprüngliche Bericht wurde nach der Sprachumstellung unten ergänzt.
 
 - Swift-Kern auf Daniels Mac erfolgreich kompiliert. Lokale XCTest-Ausführung war wegen fehlendem vollständigem Xcode nicht möglich.
 - Alle fünf XCTest-Tests auf GitHub bestanden: Vorbereitung/Intervallgrenzen, Pause/Fortsetzung ohne Vorbereitung, validierte Preset-Daten, WAV-Dauer/Gong-Hüllkurve, stille Vorbereitung.
@@ -12,3 +12,9 @@ Geprüfter App-Quellcode: Commit `de07de0`. Nachfolgende Änderungen betreffen a
 Nachweis: https://github.com/daniel4828/still-meditation/actions/runs/39159930627
 
 Nicht ausgeführt: Installation auf Daniels physischem iPhone, hörbare Gongs bei gesperrtem Bildschirm und Fokus, lange Hintergrundsitzung, Telefon-/Kopfhörer-Unterbrechungen, tatsächliche App-Bedienung in einem UI-Test. Die Checkliste dafür steht in README.md. Simulatorstart und bestandener Build ersetzen diese Gerätetests nicht.
+
+## Chinesische Oberfläche
+
+App-Quellcode `21e94d2`: vollständige Umstellung auf vereinfachtes Chinesisch, einschließlich Hinweise, VoiceOver-Texte, Fehlertexte und Anzeigename 静坐. Alle fünf Tests, vollständiger iPhone-Simulator-Build und Simulatorstart bestanden. Chinesische Hauptansicht visuell geprüft; helle und dunkle Vorschau-Dateien aktualisiert. Benutzerdefinierte Preset-Namen bleiben erhalten. Keine Änderungen an Timer- oder Audioablauf.
+
+Nachweis: https://github.com/daniel4828/still-meditation/actions/runs/39163290098
