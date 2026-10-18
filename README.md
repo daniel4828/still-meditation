@@ -43,7 +43,7 @@ Die Architektur ist für gesperrten Bildschirm und aktiven Fokus „Nicht störe
 4. Kopfhörer trennen und einen Anruf annehmen: Sitzung muss pausieren und darf nicht überraschend auf dem Lautsprecher fortgesetzt werden.
 5. Preset speichern, App beenden und öffnen: Preset bleibt erhalten; Sitzung startet nicht von selbst.
 
-Diese Gerätetests wurden bei der Erstellung **noch nicht ausgeführt**. Build-Status und automatische Prüfungen stehen unter [GitHub Actions](../../actions).
+Diese Gerätetests wurden bei der Erstellung **noch nicht ausgeführt**. Build-Status und automatische Prüfungen stehen unter [GitHub Actions](https://github.com/daniel4828/still-meditation/actions).
 
 ## Entwicklung
 

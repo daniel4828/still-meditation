@@ -1,7 +1,15 @@
 name: App prüfen
 on:
   push:
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - 'LICENSE'
   pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - 'LICENSE'
 permissions:
   contents: read
 jobs:
